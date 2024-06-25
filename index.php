@@ -1,3 +1,17 @@
+<?php
+// Connexion à la base de données
+$conn = new mysqli('localhost', 'root', '', 'boutique'); // Ajustez les paramètres si nécessaire
+
+// Vérifiez la connexion
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Récupération des articles depuis la base de données
+$result = $conn->query("SELECT * FROM articles");
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -21,49 +35,27 @@
     </a>
 
     <div class="articlelist">
-
-        <div class="article">
-            <h2>Baguette de pain</h2>
-            <img class="motomoto" src="images moto/baguette.jpg" alt="Baguette de pain">
-            <span class="description">Ce genre de baguette de pain qui permet de faire des sandwich tah les merguez sauce barbecue</span>
-            <div class="chiffre">
-                <button class="ajouteraupanier">Ajouter au panier</button>
-                <span class="prix" data-set="1.20">1,20€</span>
+        <?php while ($row = $result->fetch_assoc()) : ?>
+            <div class="article">
+                <h2><?= htmlspecialchars($row['nom']) ?></h2>
+                <img class="motomoto" src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['nom']) ?>">
+                <span class="description"><?= htmlspecialchars($row['description']) ?></span>
+                <div class="chiffre">
+                    <form method="POST" action="ajouter_au_panier.php">
+                        <input type="hidden" name="article_id" value="<?= $row['id'] ?>">
+                        <button type="submit" class="ajouteraupanier">Ajouter au panier</button>
+                    </form>
+                    <span class="prix"><?= number_format($row['prix'], 2, ',', ' ') ?>€</span>
+                </div>
             </div>
-        </div>
-
-        <div class="article">
-            <h2>Pain au chocolat</h2>
-            <img class="motomoto" src="images moto/painauchocolat.jpg" alt="Pain au chocolat">
-            <span class="description">avec un chocolat chaud c'est bon le matin.</span>
-            <div class="chiffre">
-                <button class="ajouteraupanier">Ajouter au panier</button>
-                <span class="prix" data-set="1.50">1,50€</span>
-            </div>
-        </div>
-
-        <div class="article">
-            <h2>Croissant</h2>
-            <img class="motomoto" src="images moto/croissant.webp" alt="Croissant">
-            <span class="description">Ce genre de croissant bien fondant miam miam</span>
-            <div class="chiffre">
-                <button class="ajouteraupanier">Ajouter au panier</button>
-                <span class="prix" data-set="1.00">1,00€</span>
-            </div>
-        </div>
-
-        <div class="article">
-            <h2>Chouquettes</h2>
-            <img class="motomoto" src="images moto/chouquette.jpeg" alt="Chouquettes">
-            <span class="description">De magnifiques chouquettes vendues par 100g. Attention elles sont délicieuses, miam miam.</span>
-            <div class="chiffre">
-                <button class="ajouteraupanier">Ajouter au panier</button>
-                <span class="prix" data-set="3.99">3,99€</span>
-            </div>
-        </div>
-
+        <?php endwhile; ?>
     </div>
 
 </body>
 
 </html>
+
+<?php
+// Fermez la connexion à la base de données
+$conn->close();
+?>
