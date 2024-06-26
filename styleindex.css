@@ -1,4 +1,3 @@
-/* styleindex.css */
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -10,9 +9,15 @@ body {
     padding: 0;
 }
 
-.titrepage {
+.titrepage{
     margin: 20px 0;
     font-size: 2em;
+    color: #4d30b4;
+}
+
+h3 {
+    margin: 20px 0;
+    font-size: 1.5em;
     color: #4d30b4;
 }
 
@@ -76,7 +81,7 @@ a {
     font-weight: bold;
 }
 
-.ajouteraupanier {
+.ajouteraupanier, .retirerdupanier{
     padding: 10px 20px;
     background-color: #4d30b4;
     color: white;
