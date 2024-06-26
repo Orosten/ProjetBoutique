@@ -39,7 +39,7 @@ include ("header.php");
                             <button type="submit" class="retirerdupanier">Retirer du panier</button>
                         </form>
                 </div>
-                
+
             <?php endwhile; ?>
         <?php else : ?>
             <p>Votre panier est vide.</p>
@@ -52,6 +52,7 @@ include ("header.php");
     
     <div class="totalPrix">
         <h3>Total: <?= number_format($totalPrice, 2, ',', ' ') ?>€</h3>
+        <a href="https://www.youtube.com/watch?v=ag1frmlUuf8" class="payement" target="_blank">Commander</a>
     </div>
 
 </body>
